@@ -36,4 +36,4 @@ jobs:
             matrix:
                 branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
         steps:
-            - run: echo "Hello I'm triggered for the branch ${{ matrix.branch }}"
+            - run: gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}

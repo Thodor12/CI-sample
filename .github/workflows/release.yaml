@@ -1,0 +1,17 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            type:
+                required: true
+                description: What type of release to make
+                type: string
+
+jobs:
+    release:
+        uses: ./.github/workflows/create_release_version_reuse.yaml
+        with:
+            version: 1.21
+            type: ${{ inputs.type }}
+        secrets: inherit

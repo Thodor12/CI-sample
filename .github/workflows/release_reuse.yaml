@@ -1,0 +1,16 @@
+on:
+    workflow_call:
+        inputs:
+            type:
+                required: true
+                description: What type of release to make
+                type: string
+            version:
+                required: true
+                type: string
+
+jobs:
+    build:
+        runs-on: ubuntu-latest
+        steps:
+            - run: echo "Building release of type ${{ inputs.type }} for version ${{ inputs.version }}"
