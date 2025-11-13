@@ -1,0 +1,33 @@
+name: Create Release Version
+
+on:
+    workflow_call:
+        inputs:
+            branch_pattern:
+                required: true
+                type: string
+
+jobs:
+    determine-branches:
+        runs-on: ubuntu-latest
+        outputs:
+            branches: ${{ steps.branchNames.outputs.branches }}
+        steps:
+            - id: checkout
+              name: Checkout repository
+              uses: actions/checkout@v4
+            - id: branchNames
+              name: Gather valid branch names
+              run: |
+                  branches=$(git branch -a --list ${{ inputs.branch_pattern }})
+                  echo $branches
+                  echo "branches=${branches}" >> "$GITHUB_OUTPUT"
+
+    create-release:
+        needs:
+            - determine-branches
+        strategy:
+            matrix:
+                branch: ${{ needs.determine-branches.outputs.branches }}
+        steps:
+            - run: echo "Hello I'm triggered for the branch ${{ matrix.branch }}"
