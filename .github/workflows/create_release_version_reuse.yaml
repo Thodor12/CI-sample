@@ -24,7 +24,7 @@ jobs:
               run: |
                   branches=($(git branch -a -l --format="%(refname:short)" ${{ inputs.branch_pattern }}))
                   echo $branches
-                  echo $branches[0]
+                  echo ${branches[0]}
                   echo "branches=${branches}" >> "$GITHUB_OUTPUT"
 
     create-release:
