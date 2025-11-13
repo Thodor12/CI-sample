@@ -22,10 +22,11 @@ jobs:
             - id: branchNames
               name: Gather valid branch names
               run: |
-                  branches=($(git branch -r -l --format="%(refname:short)" origin/${{ inputs.branch_pattern }}))
-                  echo $branches
-                  echo ${branches[0]}
-                  echo "branches=${branches}" >> "$GITHUB_OUTPUT"
+                  branches=($(git branch -r -l --format="'%(refname:short)'" origin/${{ inputs.branch_pattern }}))
+                  branches_raw=$(printf ",%s" "${branches[@]}")
+                  branches_arr=[${branches_raw:1}]
+                  echo $branches_arr
+                  echo "branches=${branches_arr}" >> "$GITHUB_OUTPUT"
 
     create-release:
         runs-on: ubuntu-latest
