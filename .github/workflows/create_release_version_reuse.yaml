@@ -19,7 +19,7 @@ jobs:
             - id: branchNames
               name: Gather valid branch names
               run: |
-                  branches=$(git branch -a --list ${{ inputs.branch_pattern }})
+                  branches=$(git branch -a -l --format="%(refname:short)" ${{ inputs.branch_pattern }})
                   echo $branches
                   echo "branches=${branches}" >> "$GITHUB_OUTPUT"
 
