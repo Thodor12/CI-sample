@@ -16,10 +16,13 @@ jobs:
             - id: checkout
               name: Checkout repository
               uses: actions/checkout@v4
+            - id: fetch
+              name: Fetch all branches
+              run: git fetch --all
             - id: branchNames
               name: Gather valid branch names
               run: |
-                  branches=($(git branch -a -l --format="%(refname:short)" ${{ inputs.branch_pattern }} | cut -c 3-))
+                  branches=($(git branch -a -l --format="%(refname:short)" ${{ inputs.branch_pattern }}))
                   echo $branches
                   echo $branches[0]
                   echo "branches=${branches}" >> "$GITHUB_OUTPUT"
