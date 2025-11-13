@@ -41,6 +41,7 @@ jobs:
     strategy:
       matrix:
         branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
+    continue-on-error: true
     steps:
       - uses: actions/checkout@v4
       - run: echo $GH_TOKEN && gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}
