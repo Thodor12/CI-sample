@@ -6,6 +6,9 @@ on:
     schedule:
         - cron: 0 16 * * 0
 
+permissions:
+    actions: write
+
 jobs:
     release:
         uses: ./.github/workflows/create_release_version_reuse.yaml
