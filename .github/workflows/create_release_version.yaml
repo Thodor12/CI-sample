@@ -1,7 +1,6 @@
 name: Create Release Version
 
 on:
-  push:
   workflow_dispatch:
   schedule:
     - cron: 0 16 * * 0
