@@ -1,14 +1,21 @@
 name: Create Release Version
 
+env:
+    DEFAULT_BRANCH: ${{ github.event.repository.default_branch }}
+
 on:
     workflow_dispatch:
+    schedule:
+        - cron: 0 16 * * 0
     workflow_run:
         workflows:
             - Create Release Version
         types:
             - requested
+        branches:
+            - version/*
         branches-ignore:
-            - ${{ github.event.repository.default_branch }}
+            - $DEFAULT_BRANCH
 
 jobs:
     output:
