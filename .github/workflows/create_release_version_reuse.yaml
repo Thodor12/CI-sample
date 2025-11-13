@@ -1,45 +1,45 @@
 name: Create Release Version
 
 on:
-    workflow_call:
-        inputs:
-            branch_pattern:
-                required: true
-                type: string
+  workflow_call:
+    inputs:
+      branch_pattern:
+        required: true
+        type: string
 
 env:
-    GH_TOKEN: ${{ github.token }}
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
-    determine-branches:
-        runs-on: ubuntu-latest
-        outputs:
-            branches: ${{ steps.branchNames.outputs.branches }}
-        steps:
-            - id: checkout
-              name: Checkout repository
-              uses: actions/checkout@v4
-            - id: fetch
-              name: Fetch all branches
-              run: git fetch --all
-            - id: branchNames
-              name: Gather valid branch names
-              run: |
-                  branches=($(git branch -r -l --format="'%(refname:short)'" origin/${{ inputs.branch_pattern }}))
-                  branches_raw=$(printf ",%s" "${branches[@]}")
-                  branches_arr=[${branches_raw:1}]
-                  echo $branches_arr
-                  echo "branches=${branches_arr}" >> "$GITHUB_OUTPUT"
+  determine-branches:
+    runs-on: ubuntu-latest
+    outputs:
+      branches: ${{ steps.branchNames.outputs.branches }}
+    steps:
+      - id: checkout
+        name: Checkout repository
+        uses: actions/checkout@v4
+      - id: fetch
+        name: Fetch all branches
+        run: git fetch --all
+      - id: branchNames
+        name: Gather valid branch names
+        run: |
+          branches=($(git branch -a -l --format="'%(refname:short)'" ${{ inputs.branch_pattern }}))
+          branches_raw=$(printf ",%s" "${branches[@]}")
+          branches_json=[${branches_raw:1}]
+          echo $branches_json
+          echo "branches=${branches_json}" >> "$GITHUB_OUTPUT"
 
-    create-release:
-        permissions:
-            actions: write
-        runs-on: ubuntu-latest
-        needs:
-            - determine-branches
-        strategy:
-            matrix:
-                branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
-        steps:
-            - uses: actions/checkout@v4
-            - run: echo $GH_TOKEN && gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}
+  create-release:
+    permissions:
+      actions: write
+    runs-on: ubuntu-latest
+    needs:
+      - determine-branches
+    strategy:
+      matrix:
+        branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: echo $GH_TOKEN && gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}

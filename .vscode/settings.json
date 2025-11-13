@@ -1,0 +1,6 @@
+{
+    "[github-actions-workflow]": {
+        "editor.detectIndentation": false,
+        "editor.tabSize": 2
+    }
+}
