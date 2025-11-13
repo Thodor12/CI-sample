@@ -1,0 +1,14 @@
+name: Create Release Version
+
+on:
+    workflow_dispatch:
+    workflow_run:
+        workflows:
+            - Create Release Version
+        types:
+            - requested
+
+jobs:
+    output:
+        uses: ./.github/workflows/reuse.yaml
+        secrets: inherit
