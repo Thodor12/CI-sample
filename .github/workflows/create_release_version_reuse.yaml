@@ -40,4 +40,4 @@ jobs:
                 branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
         steps:
             - uses: actions/checkout@v4
-            - run: gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}
+            - run: echo $GH_TOKEN && gh workflow run release.yaml -f type=release -r ${{ matrix.branch }}
