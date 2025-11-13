@@ -8,4 +8,6 @@ on:
 jobs:
     release:
         uses: ./.github/workflows/create_release_version_reuse.yaml
+        with:
+            branch_pattern: version/*
         secrets: inherit
