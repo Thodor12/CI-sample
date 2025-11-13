@@ -7,6 +7,8 @@ on:
             - Create Release Version
         types:
             - requested
+        branches-ignore:
+            - ${{ github.event.repository.default_branch }}
 
 jobs:
     output:
