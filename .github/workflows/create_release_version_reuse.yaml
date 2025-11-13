@@ -24,6 +24,7 @@ jobs:
                   echo "branches=${branches}" >> "$GITHUB_OUTPUT"
 
     create-release:
+        runs-on: ubuntu-latest
         needs:
             - determine-branches
         strategy:
