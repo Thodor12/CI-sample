@@ -34,6 +34,6 @@ jobs:
             - determine-branches
         strategy:
             matrix:
-                branch: ${{ needs.determine-branches.outputs.branches }}
+                branch: ${{ fromJson(needs.determine-branches.outputs.branches) }}
         steps:
             - run: echo "Hello I'm triggered for the branch ${{ matrix.branch }}"
