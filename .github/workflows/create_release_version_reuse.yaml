@@ -25,7 +25,7 @@ jobs:
       - id: branchNames
         name: Gather valid branch names
         run: |
-          branches=($(git branch -a -l --format="'%(refname:short)'" ${{ inputs.branch_pattern }}))
+          branches=($(git branch -r -l --format="'%(refname:lstrip=3)'" origin/${{ inputs.branch_pattern }}))
           branches_raw=$(printf ",%s" "${branches[@]}")
           branches_json=[${branches_raw:1}]
           echo $branches_json

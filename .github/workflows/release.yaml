@@ -12,6 +12,6 @@ jobs:
   release:
     uses: ./.github/workflows/release_reuse.yaml
     with:
-      version: 1.21
+      version: 1.20
       type: ${{ inputs.type }}
     secrets: inherit
